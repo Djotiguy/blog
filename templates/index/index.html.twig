@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Bulletins - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div style="max-width: 800px; margin: auto;">
+      <h1 class="display-2">Liste des Bulletins</h1>
+      <a href="{{ path('bulletin_generate') }}" type="button" class="btn btn-danger">Générer Bulletin</a>
+      <a href="{{ path('bulletin_create') }}" type="button" class="btn btn-success">Créer Bulletin</a>
+      <a href="{{ path('tag_create') }}" type="button" class="btn btn-primary">Créer Tag</a>
+
+      {% for bulletin in bulletins %}
+        <div class="alert alert-{{ bulletin.colorCode }}" style="margin-top:20px">
+            <h3 class="display-5">{{ bulletin.title }}</h3>
+            <p class="h2">{{ bulletin.category }}</p>
+            <p>{{ bulletin.content|nl2br }}</p>
+            <p class="lead">Date de création: {{ bulletin.creationDate|date('d/m/Y à G:i:s', 'Europe/Paris') }}</p>
+            <p>
+              <b>Tags:</b>
+              {% if bulletin.tags is not empty %}
+                {% for tag in bulletin.tags %}
+                  <a href="{{ path('index_tag', {'tagId' : tag.id}) }}">{{ tag.name }}</a>;
+                {% endfor %}
+              {% else %}
+                <i>Aucun.</i>
+              {% endif %}
+            </p>
+            <a href="{{ path('bulletin_display', {'bulletinId' : bulletin.id}) }}" type="button" class="btn btn-primary">Afficher</a>
+            <a href="{{ path('bulletin_update', {'bulletinId' : bulletin.id}) }}" type="button" class="btn btn-warning">Modifier</a>
+            <a href="{{ path('bulletin_delete', {'bulletinId' : bulletin.id}) }}" type="button" class="btn btn-danger">Supprimer</a>
+        </div>
+      {% endfor %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Tags - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div style="max-width: 800px; margin: auto;">
+      <h1 class="display-2">Liste des Tags</h1>
+      <a href="{{ path('tag_create') }}" type="button" class="btn btn-primary">Créer Tag</a>
+
+      <ul class="list-group list-group-flush" style="margin-top:20px;">
+        {% for tag in tags %}
+            <li class="list-group-item">
+                <p>
+                    {{ tag.name }}
+                    <a href="{{ path('tag_delete', {'tagId' : tag.id}) }}" type="button" class="btn btn-danger" style="float:right">Supprimer</a>
+                </p>
+            </li>
+        {% endfor %}
+      </ul>      
+
+    </div>
+{% endblock %}
